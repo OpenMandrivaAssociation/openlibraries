@@ -1,12 +1,13 @@
-%define major		0.0.3
+%define major		0
 %define libname		%mklibname %name %major
-%define libnamedev	%mklibname %name %major -d
+%define old_libname	%mklibname %name 0.0.3
+%define libnamedev	%mklibname %name -d
 %define libname_orig	lib%{name}
 
 Summary: Library suite for non-linear editing, VFX and rich media applications
 Name:		openlibraries
 Version:	0.3.0
-Release:	%mkrel 4
+Release:	%mkrel 5
 License:	LGPL
 Group:		System/Libraries
 Source:		http://kent.dl.sourceforge.net/sourceforge/openlibraries/openlibraries-%{version}.tar.bz2
@@ -16,6 +17,7 @@ Patch2:		openlibraries-%{version}-libpath.patch
 URL:		http://www.openlibraries.org/
 BuildRoot:	%{_tmppath}/%name-%{version}-root
 Requires:	boost >= 1.33
+BuildRequires:	automake autoconf
 BuildRequires:	glew-devel >= 1.3.3
 BuildRequires:	boost-devel >= 1.33
 BuildRequires:	sqlite3-devel
@@ -49,6 +51,7 @@ and deploy rich media applications.
 Summary:	OpenLibraries libraries
 Group:		System/Libraries
 Provides:	%{name} = %{version}-%{release}
+Obsoletes:	%old_libname
 
 %description -n %{libname}
 This package contains the libraries needed to run programs dynamically
@@ -60,6 +63,7 @@ Group:		Development/C
 Requires:	%{libname} = %{version}
 Provides:       %{name}-devel = %{version}-%{release}
 Provides:       %{libname_orig}-devel = %{version}-%{release}
+Obsoletes:	%old_libname-devel
 
 %description -n %{libnamedev}
 OpenLibraries development headers/libs.
@@ -90,14 +94,14 @@ if [ ! -z $QTDIR ]; then
         export QTPATH=$QTDIR/bin
         export PATH=$PATH:$QTPATH
 else
-        export PATH=$PATH:%{_prefix}/lib/qt3
+        export PATH=$PATH:%{qt3dir}
 fi
 %configure2_5x \
 	--enable-static \
 	--disable-cg \
 	--with-boostversion=1_33_1 \
-	--with-qtinclude=$QTDIR/include \
-	--with-qtlib=$QTDIR/%{_lib} \
+	--with-qtinclude=%{qt3include} \
+	--with-qtlib=%{qt3lib} \
 %if %{mdkversion} >= 200710
 	--with-pythonversion=2.5
 %endif
@@ -115,10 +119,8 @@ rm -rf $RPM_BUILD_ROOT
 
 %files -n %{libname}
 %defattr(-,root,root)
-%{_libdir}/*.so.%{major}
-%{_libdir}/*.so.0
-%{_libdir}/%{name}-%{version}/*/plugins/*.so.%{major}
-%{_libdir}/%{name}-%{version}/*/plugins/*.so.0
+%{_libdir}/*.so.%{major}*
+%{_libdir}/%{name}-%{version}/*/plugins/*.so.%{major}*
 %{py_platsitedir}/*
 
 %files -n %{libnamedev}
@@ -137,5 +139,3 @@ rm -rf $RPM_BUILD_ROOT
 %files media
 %defattr(-,root,root)
 %{_datadir}/%{name}-%{version}
-
-
