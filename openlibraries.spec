@@ -6,11 +6,11 @@
 
 Summary: Library suite for non-linear editing, VFX and rich media applications
 Name:		openlibraries
-Version:	0.3.0
-Release:	%mkrel 5
+Version:	0.4.0
+Release:	%mkrel 1
 License:	LGPL
 Group:		System/Libraries
-Source:		http://kent.dl.sourceforge.net/sourceforge/openlibraries/openlibraries-%{version}.tar.bz2
+Source:		http://kent.dl.sourceforge.net/sourceforge/openlibraries/openlibraries-%{version}.tar.gz
 Patch0:		openlibraries-0.2-system-boost.patch
 Patch1:		openlibraries-0.2-compile.patch
 Patch2:		openlibraries-%{version}-libpath.patch
