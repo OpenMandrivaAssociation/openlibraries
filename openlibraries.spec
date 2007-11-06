@@ -99,7 +99,8 @@ fi
 %configure2_5x \
 	--enable-static \
 	--disable-cg \
-	--with-boostversion=1_33_1 \
+	--with-boostruntime=mt \
+	--with-boostthreadruntime=mt \
 	--with-qtinclude=%{qt3include} \
 	--with-qtlib=%{qt3lib} \
 %if %{mdkversion} >= 200710
