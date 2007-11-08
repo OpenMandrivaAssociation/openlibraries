@@ -18,6 +18,7 @@ URL:		http://www.openlibraries.org/
 BuildRoot:	%{_tmppath}/%name-%{version}-root
 Requires:	boost >= 1.33
 BuildRequires:	automake autoconf
+BuildRequires:	qt3-devel
 BuildRequires:	glew-devel >= 1.3.3
 BuildRequires:	boost-devel >= 1.33
 BuildRequires:	sqlite3-devel
@@ -29,7 +30,7 @@ BuildRequires:	libpng-devel
 BuildRequires:	libjpeg-devel
 Buildconflicts:	libcaca-devel
 BuildRequires:	openal-devel
-BuildRequires:	libpython-devel
+BuildRequires:	python-devel
 BuildRequires:	OpenEXR-devel
 BuildRequires:	MesaGLU-devel
 %if %{mdkversion} >= 200610
