@@ -15,7 +15,6 @@ Patch0:		openlibraries-0.2-system-boost.patch
 Patch1:		openlibraries-0.2-compile.patch
 Patch2:		openlibraries-0.3.0-libpath.patch
 URL:		http://www.openlibraries.org/
-BuildRoot:	%{_tmppath}/%name-%{version}-root
 Requires:	boost >= 1.33
 BuildRequires:	automake autoconf
 BuildRequires:	qt3-devel
