@@ -38,7 +38,7 @@ BuildRequires:	mesagl-devel
 BuildRequires:	mesaglut-devel
 %else
 BuildRequires:	Mesa-devel
-BuildRequires:	libMesaglut-devel
+BuildRequires:	mesaglut-devel
 %endif
 BuildRequires:	mlt-devel
 BuildRequires:	mlt++-devel
