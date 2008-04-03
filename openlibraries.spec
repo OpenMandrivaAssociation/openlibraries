@@ -1,19 +1,20 @@
 %define major		0
 %define libname		%mklibname %name %major
-%define old_libname	%mklibname %name 0.0.3
+%define old_libname	%mklibname %name 0.0.5
 %define libnamedev	%mklibname %name -d
 %define libname_orig	lib%{name}
+%define snapshot	20080328
 
 Summary: Library suite for non-linear editing, VFX and rich media applications
 Name:		openlibraries
-Version:	0.4.0
-Release:	%mkrel 2
+Version:	0.5.0
+Release:	0.%{snapshot}.%mkrel 1
 License:	LGPL
 Group:		System/Libraries
-Source:		http://kent.dl.sourceforge.net/sourceforge/openlibraries/openlibraries-%{version}.tar.gz
+Source:		http://kent.dl.sourceforge.net/sourceforge/openlibraries/openlibraries-%{version}.tar.bz2
 Patch0:		openlibraries-0.2-system-boost.patch
 Patch1:		openlibraries-0.2-compile.patch
-Patch2:		openlibraries-0.3.0-libpath.patch
+Patch2:		openlibraries-0.5.0-libpath.patch
 URL:		http://www.openlibraries.org/
 BuildRoot:	%{_tmppath}/%name-%{version}-root
 Requires:	boost >= 1.33
