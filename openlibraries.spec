@@ -9,9 +9,9 @@ Summary:	Library suite for non-linear editing, VFX and rich media applications
 Name:		openlibraries
 Version:	0.5.0
 Release:	%mkrel 0.%{snapshot}.1
-License:	LGPL
+License:	LGPL+
 Group:		System/Libraries
-Source:		http://kent.dl.sourceforge.net/sourceforge/openlibraries/openlibraries-%{snapshot}.tar.lzma
+Source0:	http://downloads.sourceforge.net/%{name}/%{name}-%{snapshot}.tar.lzma
 Patch0:		openlibraries-20081210-system-boost.patch
 Patch1:		openlibraries-0.2-compile.patch
 Patch2:		openlibraries-0.5.0-libpath.patch
@@ -21,9 +21,9 @@ Patch4:		openlibraries-20081210-underlink.patch
 # (rediffed): fix a variable type problem in avformat plugin - thanks
 # Thomas Kuther - AdamW 2008/12
 Patch5:		openlibraries-20081210-alt-avformat-make.patch
-# Check for (and set libs and cflags for) avcodec as well as avformat:
-# needed as the avformat plugin must link against avcodec too - AdamW
-# 2008/12
+# Check for (and set libs and cflags for) avcodec, avutil and swscale
+# as well as avformat: needed as the avformat plugin must link against
+# them too - AdamW 2008/12
 Patch6:		openlibraries-20081210-libavcodec.patch
 # Fix for a change in boost's handling of leaf in 1.36 - AdamW 2008/12
 Patch7:		openlibraries-20081210-oil_boost_leaf.patch
@@ -46,13 +46,8 @@ BuildRequires:	ffmpeg-devel
 BuildRequires:	python-devel
 BuildRequires:	OpenEXR-devel
 BuildRequires:	MesaGLU-devel
-%if %{mdkversion} >= 200610
 BuildRequires:	mesagl-devel
 BuildRequires:	mesaglut-devel
-%else
-BuildRequires:	Mesa-devel
-BuildRequires:	mesaglut-devel
-%endif
 BuildRequires:	mlt-devel
 BuildRequires:	mlt++-devel
 
@@ -127,11 +122,11 @@ autoreconf -i
 make
 
 %install
-rm -rf $RPM_BUILD_ROOT
+rm -rf %{buildroot}
 %makeinstall_std
 
 %clean
-rm -rf $RPM_BUILD_ROOT
+rm -rf %{buildroot}
 
 %if %mdkversion < 200900
 %post -n %{libname} -p /sbin/ldconfig
