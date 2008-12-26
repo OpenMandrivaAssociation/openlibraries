@@ -116,7 +116,9 @@ autoreconf -i
 	--with-boostprefix=%{_prefix} \
 	--with-qtinclude=%{qt3include} \
 	--with-qtlib=%{qt3lib} \
-%if %{mdkversion} >= 200710
+%if %{mdkversion} >= 200910
+	--with-pythonversion=2.6
+%else
 	--with-pythonversion=2.5
 %endif
 make
