@@ -3,34 +3,24 @@
 %define old_libname	%mklibname %name 0.0.5
 %define libnamedev	%mklibname %name -d
 %define libname_orig	lib%{name}
-%define snapshot	20081210
+%define snapshot	20090823
 
 Summary:	Library suite for non-linear editing, VFX and rich media applications
 Name:		openlibraries
 Version:	0.5.0
-Release:	%mkrel 0.%{snapshot}.4
+Release:	%mkrel 0.%{snapshot}.1
 License:	LGPL+
 Group:		System/Libraries
-Source0:	http://downloads.sourceforge.net/%{name}/%{name}-%{snapshot}.tar.lzma
-Patch0:		openlibraries-20081210-system-boost.patch
+Source0:	http://downloads.sourceforge.net/%{name}/%{name}-%{snapshot}.tar.xz
+Patch0:		openlibraries-fix-ffmpeg-cmake.patch
 Patch1:		openlibraries-0.2-compile.patch
-Patch2:		openlibraries-0.5.0-libpath.patch
-Patch3:		openlibraries-20081210-mltconfig.patch
-Patch4:		openlibraries-20081210-underlink.patch
-# From http://gimpel.ath.cx/trac/browser/gimpel/media-libs/openlibraries
-# (rediffed): fix a variable type problem in avformat plugin - thanks
-# Thomas Kuther - AdamW 2008/12
-Patch5:		openlibraries-20081210-alt-avformat-make.patch
-# Check for (and set libs and cflags for) avcodec, avutil and swscale
-# as well as avformat: needed as the avformat plugin must link against
-# them too - AdamW 2008/12
-Patch6:		openlibraries-20081210-libavcodec.patch
+Patch2:		openlibraries-fix-underlinking.patch
 # Fix for a change in boost's handling of leaf in 1.36 - AdamW 2008/12
 Patch7:		openlibraries-20081210-oil_boost_leaf.patch
 URL:		http://www.openlibraries.org/
 BuildRoot:	%{_tmppath}/%{name}-%{version}-root
 Requires:	boost >= 1.33
-BuildRequires:	qt3-devel
+BuildRequires:	qt4-devel
 BuildRequires:	glew-devel >= 1.3.3
 BuildRequires:	boost-devel >= 1.33
 BuildRequires:	sqlite3-devel
@@ -49,7 +39,8 @@ BuildRequires:	MesaGLU-devel
 BuildRequires:	mesagl-devel
 BuildRequires:	mesaglut-devel
 BuildRequires:	mlt-devel
-BuildRequires:	mlt++-devel
+BuildRequires:	SDL-devel
+BuildRequires:	cmake
 
 %description
 Openlibraries contains a powerful cross-platform set of libraries that provide 
@@ -89,39 +80,15 @@ OpenLibraries sample media files.
 
 %prep
 %setup -q -n %{name}
-%patch0 -p1 -b .system-boost
+%patch0 -p0
 %patch1 -p1 -b .compile
-%patch2 -p1 -b .libpath
-%patch3 -p1 -b .mltconfig
-%patch4 -p1 -b .underlink
-%patch5 -p1 -b .vars
-%patch6 -p1 -b .libavcodec
-%patch7 -p1 -b .boost-leaf
+%patch2 -p0
 
 %build
-if [ ! -z $QTDIR ]; then
-        export QTPATH=$QTDIR/bin
-        export PATH=$PATH:$QTPATH
-else
-        export PATH=$PATH:%{qt3dir}
-fi
 
-autoreconf -i
-
-%configure2_5x \
-	--enable-static \
-	--disable-cg \
-	--with-boostruntime=mt \
-	--with-boostthreadruntime=mt \
-	--with-boostprefix=%{_prefix} \
-	--with-qtinclude=%{qt3include} \
-	--with-qtlib=%{qt3lib} \
-%if %{mdkversion} >= 200910
-	--with-pythonversion=2.6
-%else
-	--with-pythonversion=2.5
-%endif
-make
+%cmake  -DFFMPEGDIR=%{_prefix} \
+	-DCMAKE_BUILT_TYPE=Release
+%make
 
 %install
 rm -rf %{buildroot}
