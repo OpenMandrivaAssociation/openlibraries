@@ -1,0 +1,17 @@
+--- openlibraries/src/openmedialib/plugins/oil/oil_plugin.cpp	2008-12-10 16:30:40.000000000 -0800
++++ openlibraries/src/openmedialib/plugins/oil/oil_plugin.cpp.new	2008-12-10 21:13:49.000000000 -0800
+@@ -152,10 +152,10 @@
+ 			boost::filesystem::directory_iterator end_itr;
+ 			for ( boost::filesystem::directory_iterator itr( path ); itr != end_itr; ++itr )
+ 			{
+-				if ( prop_regexp_.value< int >( ) && boost::regex_match( itr->leaf( ).c_str( ), re ) )
+-					files_.push_back( itr->leaf( ).c_str( ) );
+-				else if ( !prop_regexp_.value< int >( ) && matches( itr->leaf( ).c_str( ), wild ) )
+-					files_.push_back( itr->leaf( ).c_str( ) );
++				if ( prop_regexp_.value< int >( ) && boost::regex_match( itr->path( ).leaf( ).c_str( ), re ) )
++					files_.push_back( itr->path( ).leaf( ).c_str( ) );
++				else if ( !prop_regexp_.value< int >( ) && matches( itr->path( ).leaf( ).c_str( ), wild ) )
++					files_.push_back( itr->path( ).leaf( ).c_str( ) );
+ 			}
+ 
+ 			// Sanity check

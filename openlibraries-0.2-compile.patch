@@ -1,0 +1,16 @@
+--- openlibraries/src/openmedialib/plugins/glew/glew_plugin.cpp.ark	2006-06-04 19:21:09.000000000 +0200
++++ openlibraries/src/openmedialib/plugins/glew/glew_plugin.cpp	2006-06-04 19:27:19.000000000 +0200
+@@ -27,11 +27,9 @@
+ 
+ #include <GL/glew.h>
+ 
+-#if defined ( WIN32 ) || defined ( HAVE_GL_GLUT_H )
++#undef GLAPIENTRY
++#define GLAPIENTRY
+ #include <GL/glut.h>
+-#else
+-#include <GLUT/glut.h>
+-#endif
+ 
+ namespace opl = olib::openpluginlib;
+ namespace plugin = olib::openmedialib::ml;
