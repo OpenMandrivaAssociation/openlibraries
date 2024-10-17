@@ -17,7 +17,7 @@ Patch1:		openlibraries-0.2-compile.patch
 Patch2:		openlibraries-fix-underlinking.patch
 # Fix for a change in boost's handling of leaf in 1.36 - AdamW 2008/12
 Patch7:		openlibraries-20081210-oil_boost_leaf.patch
-URL:		http://www.openlibraries.org/
+URL:		https://www.openlibraries.org/
 BuildRoot:	%{_tmppath}/%{name}-%{version}-root
 Requires:	boost >= 1.33
 BuildRequires:	qt4-devel
